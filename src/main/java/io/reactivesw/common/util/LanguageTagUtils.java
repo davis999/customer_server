@@ -1,5 +1,6 @@
 package io.reactivesw.common.util;
 
+import com.google.common.collect.Lists;
 import org.apache.commons.lang3.StringUtils;
 
 import java.text.DateFormat;
@@ -23,13 +24,13 @@ public final class LanguageTagUtils {
   static {
     if (languages == null || languages.isEmpty()) {
       Locale[] locales = DateFormat.getAvailableLocales();
-      languages = Stream.of(locales).filter(
+      languages = Lists.newArrayList(Stream.of(locales).filter(
           locale -> StringUtils.isNotBlank(locale.getLanguage())
       ).map(
           locale -> {
             return locale.getLanguage();
           }
-      ).collect(Collectors.toList());
+      ).collect(Collectors.toSet()));
     }
   }
 
