@@ -4,6 +4,7 @@ import io.reactivesw.catalog.inventory.application.model.InventoryEntry;
 import io.reactivesw.catalog.product.application.model.Product;
 import io.reactivesw.catalog.product.infrastructure.utils.ProductInventoryUtils;
 import io.reactivesw.catalog.producttype.application.model.ProductType;
+import io.reactivesw.catalog.taxcategory.application.model.TaxCategory;
 import io.reactivesw.common.model.PagedQueryResult;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,18 @@ public class ProductRestClient {
   public ProductType getProductType(String id) {
     String url = "http://localhost:8088/product-types/" + id;
     return restTemplate.getForObject(url, ProductType.class);
+  }
+
+
+  /**
+   * Gets tax category.
+   *
+   * @param id the id
+   * @return the tax category
+   */
+  public TaxCategory getTaxCategory(String id) {
+    String url = "http://localhost:8088/tax-categories/" + id;
+    return restTemplate.getForObject(url, TaxCategory.class);
   }
 
   /**

@@ -166,6 +166,7 @@ public class CategoryService {
     LOG.debug("end queryCategories, get Categories : {}", result);
 
     PagedQueryResult<Category> pagedQueryResult = new PagedQueryResult<>();
+    pagedQueryResult.setTotal(result.size());
     pagedQueryResult.setResults(result);
 
     return pagedQueryResult;

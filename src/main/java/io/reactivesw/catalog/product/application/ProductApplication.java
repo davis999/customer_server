@@ -12,6 +12,7 @@ import io.reactivesw.catalog.product.infrastructure.utils.QueryConditionUtils;
 import io.reactivesw.catalog.product.infrastructure.validator.AttributeConstraintValidator;
 import io.reactivesw.catalog.product.infrastructure.validator.SkuNameValidator;
 import io.reactivesw.catalog.producttype.application.model.ProductType;
+import io.reactivesw.catalog.taxcategory.application.model.TaxCategory;
 import io.reactivesw.common.exception.NotExistException;
 import io.reactivesw.common.model.QueryConditions;
 
@@ -64,6 +65,15 @@ public class ProductApplication {
 
     AttributeConstraintValidator.validate(productType.getAttributes(), productDraft);
     SkuNameValidator.validate(productDraft);
+
+    if (productDraft.getTaxCategory() != null) {
+      String taxCategoryId = productDraft.getTaxCategory().getId();
+      TaxCategory taxCategory = productRestClient.getTaxCategory(taxCategoryId);
+      if (taxCategory == null) {
+        LOG.debug("can not find tax category by id : {}", taxCategoryId);
+        throw new NotExistException("TaxCategory Not Found");
+      }
+    }
 
     Product result = productService.createProduct(productDraft);
 
